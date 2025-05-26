@@ -1,0 +1,43 @@
+{% extends "layout.html" %} {# Hereda la estructura base común (cabecera, scripts, estilos globales) #}
+
+{% block extra_body_class %}fondo-inicio{% endblock %} {# Añade una clase de fondo personalizada al <body> #}
+
+{% block title %}Importar película{% endblock %} {# Título de la pestaña del navegador para esta vista #}
+
+{% block content %} {# Comienzo del bloque de contenido principal que se insertará en layout.html #}
+
+<!-- Contenedor principal centrado con margen superior -->
+<div class="container mt-5 d-flex justify-content-center">
+
+    <!-- Tarjeta con efecto glass y estilos personalizados -->
+    <div class="glass-card p-4 text-center ancho">
+
+        <!-- Título de la película que se está importando -->
+        <h1 class="mb-3 explore-titles">{{ movie.title }}</h1>
+
+        <!-- Formulario para seleccionar la fecha en que el usuario vio la película -->
+        <form method="POST" class="mt-4">
+
+            <!-- Campo de entrada tipo fecha -->
+            <div class="mb-3 text-start">
+                <label for="date_watched" class="form-label text-white fw-bold">
+                    ¿Cuándo la viste tú?
+                </label>
+                <input type="date" id="date_watched" name="date_watched"
+                    class="form-control bg-dark text-light border-success">
+            </div>
+
+            <!-- Botón para enviar el formulario y añadir la película al perfil del usuario -->
+            <button type="submit" class="btn btn-success w-100 mt-3">
+                ➕ Añadir a mis películas
+            </button>
+        </form>
+    </div>
+</div>
+
+<!-- Botón fijo en la esquina inferior izquierda para volver a la lista de todas las películas -->
+<a href="{{ url_for('explore.all_movies') }}" class="btn btn-success position-fixed bottom-0 start-0 m-4">
+    ← Volver atrás
+</a>
+
+{% endblock %} {# Fin del bloque de contenido #}
