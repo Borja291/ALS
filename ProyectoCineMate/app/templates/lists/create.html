@@ -1,0 +1,63 @@
+{% extends "layout.html" %} {# Hereda la plantilla base con estilos, cabecera, etc. #}
+
+{% block extra_body_class %}fondo-list{% endblock %} {# Añade una clase al <body> para aplicar fondo específico a esta vista #}
+
+{% block title %}Crear lista - CineMate{% endblock %} {# Define el título de la pestaña del navegador #}
+
+{% block content %} {# Inicio del contenido principal de la página #}
+
+<!-- Contenedor principal centrado con margen superior -->
+<div class="container mt-5 d-flex justify-content-center">
+
+    <!-- Tarjeta con efecto glass y ancho personalizado -->
+    <div class="glass-card p-4 ancho">
+
+        <!-- Título principal -->
+        <h1 class="text-center mb-4 green-txt">Crear una nueva lista</h1>
+
+        <!-- Formulario de creación de lista, enviado por método POST -->
+        <form method="POST">
+            {{ form.hidden_tag() }} {# Token CSRF y otros campos ocultos del formulario WTForms #}
+
+            <!-- Campo para el nombre de la lista -->
+            <div class="mb-3">
+                <label for="name" class="form-label text-white">Nombre</label>
+                {{ form.name(class="form-control bg-dark text-light border-success") }}
+            </div>
+
+            <!-- Campo para la descripción de la lista -->
+            <div class="mb-3">
+                <label for="description" class="form-label text-white">Descripción</label>
+                {{ form.description(class="form-control bg-dark text-light border-success", rows="3") }}
+            </div>
+
+            {% if movies %} {# Si hay películas disponibles, muestra opciones para seleccionarlas #}
+                <div class="mb-3">
+                    <label class="form-label text-white fw-bold">Selecciona películas para esta lista:</label>
+                    <div class="form-check movieForList">
+                        {% for movie in movies %} {# Recorre cada película para mostrar un checkbox #}
+                            <div class="mb-2 text-start">
+                                <input class="form-check-input" type="checkbox" name="movie_ids" value="{{ movie.id }}" id="movie-{{ movie.id }}">
+                                <label class="form-check-label text-light" for="movie-{{ movie.id }}">
+                                    {{ movie.title }} ({{ movie.year }})
+                                </label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% else %} {# Si el usuario no tiene películas, se muestra un aviso #}
+                <p class="text-light mt-3"><em>No tienes películas añadidas aún.</em></p>
+            {% endif %}
+
+            <!-- Botón para enviar el formulario y crear la lista -->
+            <button type="submit" class="btn btn-success w-100 mt-3">✅ Crear lista</button>
+        </form>
+    </div>
+</div>
+
+<!-- Botón para volver al menú principal, fijo en la esquina inferior izquierda -->
+<a href="{{ url_for('main_routes.index') }}" class="btn btn-success position-fixed bottom-0 start-0 m-4">
+    ← Volver a Menú Principal
+</a>
+
+{% endblock %} {# Fin del contenido de la página #}

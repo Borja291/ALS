@@ -1,0 +1,44 @@
+{% extends "layout.html" %} {# Hereda la plantilla base común (estructura general, estilos, scripts) #}
+
+{% block extra_body_class %}fondo-inicio{% endblock %} {# Clase personalizada para el <body>, aplicando un fondo visual específico #}
+
+{% block title %}Añadir película{% endblock %} {# Título de la pestaña del navegador #}
+
+{% block content %} {# Inicio del bloque principal de contenido #}
+
+<!-- Contenedor centrado con margen superior -->
+<div class="container mt-5 d-flex justify-content-center">
+
+    <!-- Tarjeta con estilo glass y centrado de texto -->
+    <div class="glass-card p-4 text-center">
+
+        <!-- Título que pregunta al usuario si la película ya está registrada -->
+        <h1 class="mb-3 movie-decision-addTxt">¿La película que deseas añadir ya está registrada?</h1>
+
+        <!-- Texto informativo -->
+        <p class="text-light">
+            Antes de añadirla manualmente, puedes comprobar si ya existe en CineMate.
+        </p>
+
+        <!-- Grupo de botones: ver películas existentes o añadir manualmente -->
+        <div class="d-grid gap-4 d-md-flex justify-content-md-center mt-4">
+
+            <!-- Enlace para explorar todas las películas ya registradas -->
+            <a href="{{ url_for('explore.all_movies') }}" class="btn btn-success btn-sm">
+                🌍 Ver películas registradas
+            </a>
+
+            <!-- Enlace para acceder al formulario de añadir película manualmente -->
+            <a href="{{ url_for('movies.add_movie_form') }}" class="btn btn-success btn-sm">
+                ✍️ Añadir manualmente
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Botón fijo para volver al menú principal -->
+<a href="{{ url_for('main_routes.index') }}" class="btn btn-success position-fixed bottom-0 transparent start-0 m-4">
+    ← Volver a Menú Principal
+</a>
+
+{% endblock %} {# Fin del bloque de contenido #}

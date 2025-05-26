@@ -1,0 +1,63 @@
+{% extends "layout.html" %} {# Hereda la estructura común de la aplicación (estilos, cabecera, scripts) #}
+
+{% block extra_body_class %}fondo-list{% endblock %} {# Clase adicional para el <body>, usada para aplicar fondo específico para esta vista #}
+
+{% block title %}Editar lista - CineMate{% endblock %} {# Título que aparecerá en la pestaña del navegador #}
+
+{% block content %} {# Inicio del contenido principal de la página #}
+
+<!-- Contenedor centrado con margen superior -->
+<div class="container mt-5 d-flex justify-content-center">
+
+    <!-- Tarjeta con efecto glass y estilo personalizado -->
+    <div class="glass-card p-4 ancho">
+
+        <!-- Título con el nombre actual de la lista -->
+        <h1 class="text-center green-txt">Editar lista: {{ watchlist.name }}</h1>
+
+        <!-- Formulario que se envía por POST para guardar los cambios -->
+        <form method="POST" class="manageForm">
+
+            <div class="mb-4">
+                <p class="text-light"><strong>Añade o elimina películas a esta lista:</strong></p>
+
+                {% if movies %} {# Si el usuario tiene películas disponibles #}
+                <div class="p-2 manageListsMovies">
+
+                    {% for movie in movies %} {# Recorre todas las películas del usuario #}
+                    <div class="form-check mb-2">
+
+                        <!-- Checkbox marcado si la película ya está en la lista -->
+                        <input class="form-check-input" type="checkbox" name="movie_ids" value="{{ movie.id }}"
+                               id="movie-{{ movie.id }}"
+                               {% if movie.id in watchlist.movie_ids %}checked{% endif %}>
+
+                        <!-- Etiqueta con título y año -->
+                        <label class="form-check-label text-light" for="movie-{{ movie.id }}">
+                            {{ movie.title }} ({{ movie.year }})
+                        </label>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                {% else %} {# Si el usuario no tiene películas aún #}
+                <p class="text-light">No tienes películas añadidas todavía.</p>
+                {% endif %}
+            </div>
+
+            <!-- Botón para enviar el formulario y guardar los cambios -->
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-success">Guardar cambios</button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<!-- Botón fijo para volver a la vista general de listas -->
+<a href="{{ url_for('lists.view_lists') }}" 
+   class="btn btn-success position-fixed bottom-0 start-0 m-4">
+    ← Volver a mis listas
+</a>
+
+{% endblock %} {# Fin del bloque de contenido principal #}

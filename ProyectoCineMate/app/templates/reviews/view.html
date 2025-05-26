@@ -1,0 +1,47 @@
+{% extends "layout.html" %} {# Hereda la estructura base de la app: cabecera, scripts, estilos, etc. #}
+
+{% block title %}Reseña de {{ movie.title }}{% endblock %} {# Título dinámico en la pestaña del navegador con el nombre de la película #}
+
+{% block content %} {# Inicio del contenido principal de la página #}
+
+<!-- Contenedor principal con márgenes y centrado horizontal -->
+<div class="container mt-5 d-flex justify-content-center">
+
+    <!-- Tarjeta con estilo visual personalizado y centrado de texto -->
+    <div class="card p-4 text-center darkGreen-background">
+
+        <!-- Título con el nombre de la película -->
+        <h1 class="mb-3 green-txt">Reseña de "{{ movie.title }}"</h1>
+
+        <!-- Información básica de la película -->
+        <p class="text-light"><strong>Género:</strong> {{ movie.genre }}</p>
+        <p class="text-light"><strong>Año:</strong> {{ movie.year }}</p>
+        <p class="text-light"><strong>Vista el:</strong> {{ movie.date_watched }}</p>
+
+        {% if review %} {# Si existe una reseña del usuario para esta película #}
+
+            <hr class="text-success">
+
+            <!-- Puntuación visual (estrellas) -->
+            <h3 class="text-success">Tu puntuación:</h3>
+            <p class="fs-3 review-star">{{ "⭐" * review.rating | int }}</p> {# Multiplica el símbolo estrella por la puntuación (entero) #}
+
+            <!-- Comentario del usuario -->
+            <h3 class="text-success mt-3">Tu comentario:</h3>
+            <p class="text-light">{{ review.comment }}</p>
+
+        {% else %} {# Si no hay reseña, se muestra mensaje y opción para crearla #}
+            <p class="text-light mt-4">No has dejado ninguna reseña aún.</p>
+            <a href="{{ url_for('reviews.create_review', movie_id=movie.id) }}" class="btn btn-primary mt-3">
+                ➕ Escribir una reseña
+            </a>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Botón fijo para volver al menú principal -->
+<a href="{{ url_for('main_routes.index') }}" class="btn btn-success position-fixed bottom-0 start-0 m-4">
+    ← Volver a Menú Principal
+</a>
+
+{% endblock %} {# Fin del contenido principal #}
