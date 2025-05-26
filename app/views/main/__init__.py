@@ -1,1 +1,0 @@
-# views/main/__init__.py

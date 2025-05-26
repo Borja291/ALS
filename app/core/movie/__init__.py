@@ -1,1 +1,0 @@
-# core/movie/__init__.py
